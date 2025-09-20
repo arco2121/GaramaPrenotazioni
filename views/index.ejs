@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prenotazioni Shaw</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <h1>Benvenuto in Prenotazioni Shaw</h1>
+    <p>Il miglior sito per le tue prenotazioni!</p>
+    <div class="links">
+        <div class="link">
+            <% locals.luoghi.forEach(element => {%>
+                <div class="posto">
+                    <img src="./img/<%=element.foto_url %>" alt="Icon" width="50" height="50">
+                    <h3><%= element.nome %></h3>
+                </div>
+            <%}); %>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+CREATE DATABASE UTENTI_PREN;
+USE UTENTI_PREN;
+CREATE TABLE utenti(
+id INT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(50) NOT NULL,
+password VARCHAR(50) NOT NULL,
+nome VARCHAR(50),
+cognome VARCHAR(50)
+);
+CREATE TABLE mete(
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100) NOT NULL,
+descrizione TEXT,
+prezzo DECIMAL(10,2),
+posti_totali INT,
+foto_url VARCHAR(255)
+);
+CREATE TABLE prenotazioni(
+id INT PRIMARY KEY AUTO_INCREMENT,
+id_utente INT,
+id_meta INT,
+data_prenotazione DATE,
+num_persone INT,
+FOREIGN KEY (id_utente) REFERENCES utenti(id),
+FOREIGN KEY (id_meta) REFERENCES mete(id) 
+);
+INSERT INTO utenti (username, password, nome, cognome) VALUES
+(1,"FedeMani","1234","Federico Maniglio"),
+(2,"acosta","5678","Alberto Costa"),
+(3,"sbalestro","letmein","Sergio Balestro");
+INSERT INTO mete (id,nome,descrizione,prezzo,posti_totali,foto_url)
+VALUES (1,"Barcellona","Città spagnola",400,20,"Barcellona.jpeg"),
+(2,"Roma","Capitale italiana",300,30,"Roma.jpg"),
+(3,"Tokyo","Capitale giapponese",600,10,"Tokyo.jpg"),
+(4,"Los Angeles","Anche definita LA",500,30,"Los Angeles.jpg");
