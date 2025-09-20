@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prenotazioni Shaw</title>
+    <title>Garama Prenotazioni</title>
     <link rel="stylesheet" href="/css/index.css">
+        <link rel="icon" href="/img/logo.jpg">
 </head>
 <body>
+    <img id="backg" src="/img/shaw.jpeg" alt="Background">
     <div class="nav">
-        <h4>Prenotazioni Shaw</h4>
-        <% if(locals.logged == false){%>
+        <div class="block">
+            <img src="/img/logo.png" alt="Logo" width="50" height="50" onclick="location.href='/'">
+        </div>
+        <% if(!locals.logged){%>
             <a>Login</a>
         <%}else{%>
             <a>Logged</a>
         <%}%>
     </div>
     <div class="cont">
-        <h1>Benvenuto in Prenotazioni Shaw</h1>
-        <p style="text-align: center;">Il miglior sito per le tue prenotazioni<br><bold>Hornet approva</bold></p>
+        <h1>Benvenuto in Garama Prenotazioni</h1>
+        <p style="text-align: center;">Il miglior sito per le tue prenotazioni<br><bold>Hornet approva !</bold></p>
         <div class="links">
             <% locals.luoghi.forEach(element => {%>
                 <div class="posto" onclick="location.href = '/meta/<%=element.id%>'">

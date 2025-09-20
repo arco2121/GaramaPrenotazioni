@@ -12,21 +12,28 @@ const data = mysql.createConnection({
     password : "",
     database : "utenti_pren"
 })
-
-data.connect((erha) => {
-    erha != null?console.log("Shaw!!!"):console.log("Creato")
-})
-
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
 
+
+data.connect((erha) => {
+    erha != null?console.log("Shaw!!!"):console.log("GIT GUD!!")
+})
+
 app.get("/", (req, res) => {
-    data.query("SELECT * FROM mete", (dats,lio) => {
-        if(dats) throw dats
-        res.render("index",{logged : false,luoghi : lio})
-    })
+    try
+    {
+        data.query("SELECT * FROM mete", (dats,lio) => {
+            if(dats) throw dats
+            res.render("index",{logged : null,luoghi : lio})
+        })
+    }
+    catch
+    {
+        res.render("error",{error : "Errore di connessione al database"})
+    }
 })
 
 app.post("/loginer",(res,req)=>{
@@ -35,7 +42,7 @@ app.post("/loginer",(res,req)=>{
     data.query("SELECT * from utenti where pasword = PASSWORD(?) and username = ?",[pass,usern],(dat,lio) => {
         {
             const sesid = createSession()
-            sessions[sesid] = user
+            sessions[sesid] = usern
             req.setHeader("Set-Cookie","sessionId=" + sesid,"HttpOnly")
         }
     })
@@ -45,7 +52,7 @@ app.get("/meta/:id",(req,res)=>{
     const id = parseInt(req.params.id)
     data.query("SELECT * FROM mete where id='" + id + "'", (dats,lio) => {
         if(dats) throw dats 
-        res.render("meta",{logged : false,luogo:lio[0],disponibili: 300})
+        res.render("meta",{logged : null,luogo:lio[0],disponibili: 300})
     })
 })
 
