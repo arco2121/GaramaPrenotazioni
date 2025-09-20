@@ -5,6 +5,7 @@ const ejs = require("ejs")
 const host = "127.0.0.1"
 const port = process.env.port || 3200
 const app = express()
+app.locals.baseUrl = "http://" + host + ":" + port + "/"
 const data = mysql.createConnection({
     host : host,
     user : "root",
@@ -24,8 +25,27 @@ app.use(express.json())
 app.get("/", (req, res) => {
     data.query("SELECT * FROM mete", (dats,lio) => {
         if(dats) throw dats
-        console.log(lio)
-        res.render("index",{luoghi : lio})
+        res.render("index",{logged : false,luoghi : lio})
+    })
+})
+
+app.post("/loginer",(res,req)=>{
+    const usern = res.body.username
+    const pass = res.body.password
+    data.query("SELECT * from utenti where pasword = PASSWORD(?) and username = ?",[pass,usern],(dat,lio) => {
+        {
+            const sesid = createSession()
+            sessions[sesid] = user
+            req.setHeader("Set-Cookie","sessionId=" + sesid,"HttpOnly")
+        }
+    })
+})
+
+app.get("/meta/:id",(req,res)=>{
+    const id = parseInt(req.params.id)
+    data.query("SELECT * FROM mete where id='" + id + "'", (dats,lio) => {
+        if(dats) throw dats 
+        res.render("meta",{logged : false,luogo:lio[0],disponibili: 300})
     })
 })
 

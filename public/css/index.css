@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
+*
+{
+    font-family: "Fascinate", system-ui;
+    font-weight: 300;
+    font-style: normal;
+    transition: all 0.35s ease;
+    margin: 0 auto;
+}
+*::-webkit-scrollbar
+{
+    display: none;
+}
+img
+{
+    user-select: none;
+    -webkit-user-drag: none;
+}
+*:focus
+{
+    outline: none;
+}
+
+html
+{
+    width: 100%;
+    margin: 0 auto;
+}
+body
+{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #F2EAD3;
+}
+.nav
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F4991A;
+    width: 100%;
+    border-radius: 0px 0px 15px 15px;
+    padding: 25px 0px 35px 0px;
+}
+.cont
+{
+    margin: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    gap: 50px;
+    height: 100%;
+}
+.nav *
+{
+    margin: 20px 50px 20px 50px;
+}
+.links
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    gap: 70px;
+    align-items: center;
+    justify-content:space-evenly;
+}
+.posto
+{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 300px;
+    border-radius: 10px;
+    border: solid #344F1F 3px;
+    background-color: #F9F5F0;
+    overflow: hidden;
+    margin: 50px;
+}
+.posto:active
+{
+    scale: 0.9;
+}
+.posto img
+{
+    object-fit: cover;
+    width: auto;
+    height: 100%;
+    border-radius: 40%;
+}
+.posto .l
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 70%;
+}
+.posto .k
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+}
+.info
+{
+    
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+    gap: 70px;
+    align-items: center;
+    justify-content:center;
+    border: solid #F9F5F0 10px;
+    padding: 20px;
+    border-radius: 20px;
+}
+#io
+{
+    border: solid #344F1F 10px;
+    border-radius: 40px;
+}
+#io:active
+{
+    scale: 0.9;
+}
+.row
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    gap: 70px;
+    align-items: center;
+    justify-content:space-evenly;
+}

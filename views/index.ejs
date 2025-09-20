@@ -4,17 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prenotazioni Shaw</title>
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-    <h1>Benvenuto in Prenotazioni Shaw</h1>
-    <p>Il miglior sito per le tue prenotazioni!</p>
-    <div class="links">
-        <div class="link">
+    <div class="nav">
+        <h4>Prenotazioni Shaw</h4>
+        <% if(locals.logged == false){%>
+            <a>Login</a>
+        <%}else{%>
+            <a>Logged</a>
+        <%}%>
+    </div>
+    <div class="cont">
+        <h1>Benvenuto in Prenotazioni Shaw</h1>
+        <p style="text-align: center;">Il miglior sito per le tue prenotazioni<br><bold>Hornet approva</bold></p>
+        <div class="links">
             <% locals.luoghi.forEach(element => {%>
-                <div class="posto">
-                    <img src="./img/<%=element.foto_url %>" alt="Icon" width="50" height="50">
-                    <h3><%= element.nome %></h3>
+                <div class="posto" onclick="location.href = '/meta/<%=element.id%>'">
+                    <div class="l">
+                        <img src="./img/<%=element.foto_url %>" alt="Icon" width="50" height="50">
+                    </div>
+                    <div class="k">
+                        <h3><%= element.nome %></h3>
+                    </div>
                 </div>
             <%}); %>
         </div>

@@ -24,10 +24,10 @@ num_persone INT,
 FOREIGN KEY (id_utente) REFERENCES utenti(id),
 FOREIGN KEY (id_meta) REFERENCES mete(id) 
 );
-INSERT INTO utenti (username, password, nome, cognome) VALUES
-(1,"FedeMani","1234","Federico Maniglio"),
-(2,"acosta","5678","Alberto Costa"),
-(3,"sbalestro","letmein","Sergio Balestro");
+INSERT INTO utenti (id,username, password, nome, cognome) VALUES
+(1,"FedeMani","1234","Federico", "Maniglio"),
+(2,"acosta","5678","Alberto","Costa"),
+(3,"sbalestro","letmein","Sergio","Balestro");
 INSERT INTO mete (id,nome,descrizione,prezzo,posti_totali,foto_url)
 VALUES (1,"Barcellona","Città spagnola",400,20,"Barcellona.jpeg"),
 (2,"Roma","Capitale italiana",300,30,"Roma.jpg"),
