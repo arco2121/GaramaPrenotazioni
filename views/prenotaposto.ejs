@@ -24,21 +24,16 @@
         <%if(!locals.luogo){%>
             <h1>Nessun elemento trovato</h1>
         <%} else{%>
-            <img id="io" src="/img/<%=locals.luogo.foto_url%>">
-            <div class="info">
-                    <h1><%=locals.luogo.nome%></h1>
-                    <h3><%=locals.luogo.descrizione%></h3>
+            <form method="post" action="/prenotaposto">
                 <div class="row">
-                    <h2>Prezzo: <%=locals.luogo.prezzo%> $</h2>
-                    <h2>Posti disponibili: <%= locals.disponibili%>/<%=locals.luogo.posti_totali%></h2>
+                    <input name="data" placeholder="Data prenotazione" type="date">
                 </div>
-            </div>
-            <div class="row">
-                    <button onclick="location.href='/'">Indietro</button>
-                    <%if(locals.logged && locals.disponibili > 0){%>
-                        <button onclick="location.href='/prenotaposto/<%=locals.luogo.id%>'">Prenota</button>
-                    <%}%>
-            </div>
+                <div class="row">
+                    <input name="numero" placeholder="N persone" type="number" min="1">
+                </div>
+                <input type="hidden" name="luogo" value="<%=locals.luogo.id%>">
+                <input type="submit" value="Conferma">
+            </form>
         <%}%>
     </div>
     <div class="down">

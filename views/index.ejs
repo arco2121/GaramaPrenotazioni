@@ -11,12 +11,12 @@
     <img id="backg" src="/img/shaw.jpeg" alt="Background">
     <div class="nav">
         <div class="block">
-            <img src="/img/logo.png" alt="Logo" width="50" height="50" onclick="location.href='/'">
+            <img src="/img/logo.jpg" alt="Logo" width="50" height="50" onclick="location.href='/'">
         </div>
         <% if(!locals.logged){%>
-            <a>Login</a>
+            <a href="/login">Login\Register</a>
         <%}else{%>
-            <a>Logged</a>
+            <a href="/dash">Logged - <%=locals.logged%></a>
         <%}%>
     </div>
     <div class="cont">
@@ -34,6 +34,9 @@
                 </div>
             <%}); %>
         </div>
+    </div>
+    <div class="down">
+        <h5>Shaw - Copyright° Hornet 2025</h5>
     </div>
 </body>
 </html>

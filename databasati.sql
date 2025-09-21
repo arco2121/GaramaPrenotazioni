@@ -25,11 +25,12 @@ FOREIGN KEY (id_utente) REFERENCES utenti(id),
 FOREIGN KEY (id_meta) REFERENCES mete(id) 
 );
 INSERT INTO utenti (id,username, password, nome, cognome) VALUES
-(1,"FedeMani","1234","Federico", "Maniglio"),
-(2,"acosta","5678","Alberto","Costa"),
-(3,"sbalestro","letmein","Sergio","Balestro");
+(1,"FedeMani",PASSWORD("1234"),"Federico", "Maniglio"),
+(2,"acosta",PASSWORD("5678"),"Alberto","Costa"),
+(3,"sbalestro",PASSWORD("letmein"),"Sergio","Balestro"),
+(4,"mcolombara",PASSWORD("mcolomba"),"Marco","Colombara");
 INSERT INTO mete (id,nome,descrizione,prezzo,posti_totali,foto_url)
-VALUES (1,"Barcellona","Città spagnola",400,20,"Barcellona.jpeg"),
-(2,"Roma","Capitale italiana",300,30,"Roma.jpg"),
-(3,"Tokyo","Capitale giapponese",600,10,"Tokyo.jpg"),
-(4,"Los Angeles","Anche definita LA",500,30,"Los Angeles.jpg");
+VALUES (1,"Barcellona","Città spagnola",400,80,"Barcellona.jpeg"),
+(2,"Roma","Capitale italiana",300,100,"Roma.jpg"),
+(3,"Tokyo","Capitale giapponese",600,30,"Tokyo.jpg"),
+(4,"Los Angeles","Anche definita LA",500,60,"Los Angeles.jpg");

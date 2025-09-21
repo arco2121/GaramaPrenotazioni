@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garama Prenotazioni</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="/img/logo.jpg">
+</head>
+<body>
+    <img id="backg" src="/img/shaw.jpeg" alt="Background">
+    <div class="nav">
+        <div class="block">
+            <img src="/img/logo.jpg" alt="Logo" width="50" height="50" onclick="location.href='/'">
+            <h2>Garama</h2>
+        </div>
+        <a>Logging</a>
+    </div>
+    <div class="cont">
+        <%if(locals.error){%>
+            <div class="row spec">
+                <h1><%=locals.error%></h1>
+            </div>
+        <%}%>
+        <form id="form" action="/loginer" method="post">
+            <img src="/img/logo.jpg" width="150" height="150">
+            <div class="row">
+                <input name="username" placeholder="Username" type="text">
+            </div>
+            <div class="row">
+                <input name="password" placeholder="Password" type="password">
+            </div>
+        </form>
+        <div class="row">
+            <button onclick="location.href='/regist'">Register</button>
+            <button onclick="document.getElementById('form').submit()">Login</button>
+        </div>
+    </div>
+    <div class="down">
+        <h5>Shaw - Copyright° Hornet 2025</h5>
+    </div>
+</body>
+</html>
