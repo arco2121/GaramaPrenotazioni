@@ -61,7 +61,7 @@ app.get("/", auth, (req, res) => {
     }
     catch
     {
-        res.render("error",{error : "Errore di connessione al database"})
+        res.render("error",{error : "Errore con il database"})
     }
 })
 
@@ -87,7 +87,7 @@ app.post("/loginer",(res,req)=>{
     }    
     catch
     {
-        res.render("error",{error : "Errore di connessione al database"})
+        res.render("error",{error : "Errore con il database"})
     }
 })
 app.post("/register",(res,req)=>{
@@ -108,7 +108,7 @@ app.post("/register",(res,req)=>{
     }    
     catch
     {
-        res.render("error",{error : "Errore di connessione al database"})
+        res.render("error",{error : "Errore con il database"})
     }
 })
 app.get("/login",auth,(req,res)=>{
@@ -151,7 +151,7 @@ app.get("/meta/:id",auth,(req,res)=>{
     }
     catch
     {
-        res.render("error",{error : "Errore di connessione al database"})
+        res.render("error",{error : "Errore con il database"})
     }
 })
 
@@ -171,7 +171,7 @@ app.get("/prenotaposto/:id",auth,(req,res)=>{
     }
     catch
     {
-        res.render("error",{error : "Errore di connessione al database"})
+        res.render("error",{error : "Errore con il database"})
     }
 })
 app.post("/prenotaposto",auth,(req,res) => {
@@ -192,16 +192,95 @@ app.post("/prenotaposto",auth,(req,res) => {
         }
         data.query("SELECT * from utenti where username = ?",[res.locals.logged],(err,resu) => {
             if(err) throw err
-            data.query("INSERT INTO prenotazioni (id_utente,id_meta,data_prenotazione,num_persone) VALUES (?,?,?,?)",[resu[0].id,id,date,num],(dats,lio) => {
-                if(dats) throw dats 
-                res.redirect("/meta/" + id)
+            data.query("SELECT * from mete WHERE id = ?",[id],(io,hj) => {
+                if(io) throw io
+                 data.query("SELECT * from prenotazioni where id_meta = ?",[id],(err,resua) => {
+                    if(err) throw err
+                    let tot = 0
+                    resua.forEach(pren => {
+                        tot += pren.num_persone
+                    })
+                    if(num>(hj[0].posti_totali-tot))
+                    {
+                        res.redirect("/prenotaposto/" + id)
+                        return
+                    }
+                    else
+                    {
+                        data.query("INSERT INTO prenotazioni (id_utente,id_meta,data_prenotazione,num_persone) VALUES (?,?,?,?)",[resu[0].id,id,date,num],(dats,lio) => {
+                            if(dats) throw dats 
+                            res.redirect("/meta/" + id)
+                        })
+                    }
+                })
             })
         })
     }
     catch
     {
-        res.render("error",{error : "Errore di connessione al database"})
+        res.render("error",{error : "Errore con il database"})
     }
+})
+
+app.get("/dash",auth,(req,res) => {
+    try
+    {
+        if(!res.locals.logged)
+        {
+            res.redirect("/")
+            return
+        }
+        data.query("SELECT * from utenti where username = ?",[res.locals.logged],(err,resu) => {
+            if(err) throw err
+            const query = "SELECT prenotazioni.data_prenotazione AS data, prenotazioni.num_persone AS persone, prenotazioni.id AS id, mete.nome AS nome, mete.foto_url AS foto FROM prenotazioni JOIN utenti ON prenotazioni.id_utente = utenti.id JOIN mete ON mete.id = prenotazioni.id_meta WHERE utenti.id = ?"
+            data.query(query,[resu[0].id],(dats,lio) => {
+                if(dats) throw dats 
+                res.render("dash",{prenotazioni : lio, utente : resu})
+            })
+        })
+    }
+    catch
+    {
+        res.render("error",{error : "Errore con il database"})
+    }
+})
+
+app.post("/delete_pren",auth,(req,res) => {
+    try
+    {
+        if(!res.locals.logged)
+        {
+            res.redirect("/")
+            return
+        }
+        data.query("SELECT id AS id FROM utenti WHERE username = ?",[res.locals.logged],(et,resu) => {
+            if(et) throw et
+            data.query("DELETE FROM prenotazioni where id_utente = ? AND id = ?",[resu[0].id,parseInt(req.body.id_pren)],(err,resu) => {
+                if(err) throw err
+                res.redirect("/dash")
+            })
+        })
+    }
+    catch
+    {
+        res.render("error",{error : "Errore con il database"})
+    }
+})
+
+app.get("/logout",auth,(req,res) => {
+    if(!res.locals.logged)
+    {
+        res.redirect("/")
+        return
+    }
+    const sessionId = req.headers.cookie.split('=')[1]
+    delete sessions[sessionId]
+    res.setHeader('Set-Cookie', 'sessionId=')
+    res.redirect("/")
+})
+
+app.use((req,res) => {
+    res.redirect("/")
 })
 
 app.listen(port, host, () => {
