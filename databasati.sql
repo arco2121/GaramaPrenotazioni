@@ -1,8 +1,8 @@
-CREATE DATABASE UTENTI_PREN;
+CREATE DATABASE garama_prenotazioni;
 USE UTENTI_PREN;
 CREATE TABLE utenti(
 id INT PRIMARY KEY AUTO_INCREMENT,
-username VARCHAR(50) NOT NULL,
+username VARCHAR(50) PRIMARY KEY NOT NULL,
 password VARCHAR(50) NOT NULL,
 nome VARCHAR(50),
 cognome VARCHAR(50)
@@ -21,8 +21,8 @@ id_utente INT,
 id_meta INT,
 data_prenotazione DATE,
 num_persone INT,
-FOREIGN KEY (id_utente) REFERENCES utenti(id),
-FOREIGN KEY (id_meta) REFERENCES mete(id) 
+FOREIGN KEY (id_utente) REFERENCES utenti(id) ON DELETE CASCADE,
+FOREIGN KEY (id_meta) REFERENCES mete(id) ON DELETE CASCADE
 );
 INSERT INTO utenti (id,username, password, nome, cognome) VALUES
 (1,"FedeMani",PASSWORD("1234"),"Federico", "Maniglio"),

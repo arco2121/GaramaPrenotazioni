@@ -244,6 +244,10 @@ input
     margin: 20px 0px 40px 0px;
     font-size: 15px;
 }
+input:active
+{
+    scale: 0.95;
+}
 .spec
 {
     border: #F9F5F0 solid 7px;
@@ -284,9 +288,9 @@ input
 {
     display: flex;
     flex-direction: column;
-    width: 50%;
     height: 100%;
     gap: 30px;
+    padding: 20px;
     align-items: center;
     justify-content: space-evenly;
     margin: 30px 0px 30px 0px;

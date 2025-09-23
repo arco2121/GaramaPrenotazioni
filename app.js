@@ -4,7 +4,10 @@ const ejs = require("ejs")
 
 const host = "127.0.0.1"
 const port = process.env.port || 3200
-const app = express()
+const usern = "root"
+const passw = ""
+const database = "garama_prenotazioni"
+
 const sessions = {}
 const SessionId = () => {
     let h 
@@ -34,18 +37,19 @@ const auth = (req, res, next) => {
     }
     next();
 }
+
+const app = express()
 app.locals.baseUrl = "http://" + host + ":" + port + "/"
 const data = mysql.createConnection({
     host : host,
-    user : "root",
-    password : "",
-    database : "utenti_pren"
+    user : usern,
+    password : passw,
+    database : database
 })
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
-
 
 data.connect((erha) => {
     erha != null?console.log("Shaw!!!"):console.log("GIT GUD!!")
@@ -101,9 +105,19 @@ app.post("/register",(res,req)=>{
         {
             req.redirect("/regist")
         }
-        data.query("INSERT INTO utenti (username, password, nome, cognome) VALUES (?,PASSWORD(?),?,?)",[usern,pass,nome,cogn],(dat,lio) => {
-            if(dat) throw dat
-            req.redirect("/login")
+        data.query("SELECT * from utenti WHERE username = ?",[usern],(err,sd) => {
+            if(err) throw err
+            if(sd.length == 0)
+            {
+                data.query("INSERT INTO utenti (username, password, nome, cognome) VALUES (?,PASSWORD(?),?,?)",[usern,pass,nome,cogn],(dat,lio) => {
+                    if(dat) throw dat
+                    req.redirect("/login")
+                })
+            }
+            else
+            {
+                req.redirect("/regist")
+            }
         })
     }    
     catch
@@ -235,7 +249,7 @@ app.get("/dash",auth,(req,res) => {
             const query = "SELECT prenotazioni.data_prenotazione AS data, prenotazioni.num_persone AS persone, prenotazioni.id AS id, mete.nome AS nome, mete.foto_url AS foto FROM prenotazioni JOIN utenti ON prenotazioni.id_utente = utenti.id JOIN mete ON mete.id = prenotazioni.id_meta WHERE utenti.id = ?"
             data.query(query,[resu[0].id],(dats,lio) => {
                 if(dats) throw dats 
-                res.render("dash",{prenotazioni : lio, utente : resu})
+                res.render("dash",{prenotazioni : lio, utente : resu[0]})
             })
         })
     }
@@ -259,6 +273,24 @@ app.post("/delete_pren",auth,(req,res) => {
                 if(err) throw err
                 res.redirect("/dash")
             })
+        })
+    }
+    catch
+    {
+        res.render("error",{error : "Errore con il database"})
+    }
+})
+app.post("/delete_acc",auth,(req,res) => {
+    try
+    {
+        if(!res.locals.logged)
+        {
+            res.redirect("/")
+            return
+        }
+        data.query("DELETE FROM utenti where username = ?",[res.locals.logged],(err,resu) => {
+            if(err) throw err
+            res.redirect("/logout")
         })
     }
     catch

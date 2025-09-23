@@ -21,6 +21,19 @@
         <%}%>
     </div>
     <div class="cont">
+        <div class="row">
+            <div class="col">
+                <h2><%= locals.utente.nome %></h2>
+                <h2><%= locals.utente.cognome %></h2>
+            </div>
+            <div class="col">
+                <form method="post" action="/delete_acc">
+                    <input type="submit" value="Delete account">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="cont">
         <% if(locals.prenotazioni.length == 0) {%>
             <h1>Nessuna prenotazione</h1>
         <%}else{%>
@@ -28,7 +41,9 @@
                 <form action="/delete_pren" method="post" class="prenotazione">
                     <img src="/img/<%=pren.foto%>" class="backpren">
                     <div class="row">
-                        <h2 class="bn"><%=pren.nome%></h2>
+                        <div class="col">
+                            <h2 class="bn"><%=pren.nome%></h2>
+                        </div>
                         <div class="col">
                             <h3 class="bn">Data: <%=pren.data.toISOString().split('T')[0]%></h3>
                             <h3 class="bn">N.persone: <%=pren.persone%></h3>
