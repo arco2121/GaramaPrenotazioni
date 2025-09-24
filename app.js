@@ -7,6 +7,12 @@ const port = process.env.port || 3200
 const usern = "root"
 const passw = ""
 const database = "garama_prenotazioni"
+const config = {
+    host : host,
+    user : usern,
+    password : passw,
+    database : database
+}
 
 const sessions = {}
 const SessionId = () => {
@@ -40,22 +46,41 @@ const auth = (req, res, next) => {
 
 const app = express()
 app.locals.baseUrl = "http://" + host + ":" + port + "/"
-const data = mysql.createConnection({
-    host : host,
-    user : usern,
-    password : passw,
-    database : database
-})
+let data = mysql.createConnection(config)
 app.set("view engine", "ejs")
 app.use(express.static("public"))
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
+let errorma = null
+let beg = false;
 
-data.connect((erha) => {
-    erha != null?console.log("Shaw!!!"):console.log("GIT GUD!!")
-})
+const connectData = () => {
+    if(beg) 
+        data = mysql.createConnection(config)
+    beg = true
+    data.connect((erha) => {
+        if(erha != null)
+        {
+            console.log("Shaw!!!")
+            errorma = erha
+        }
+        else
+        {
+            console.log("GIT GUD!!")
+            errorma = null
+        }
+        return
+    })
+}
+connectData()
 
 app.get("/", auth, (req, res) => {
+    connectData()
+    if(errorma)
+    {
+        res.render("error",{error : errorma})
+        return
+    }
     try
     {
         data.query("SELECT * FROM mete", (dats,lio) => {
@@ -63,9 +88,9 @@ app.get("/", auth, (req, res) => {
             res.render("index",{luoghi : lio})
         })
     }
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 
@@ -89,9 +114,9 @@ app.post("/loginer",(res,req)=>{
             }
         })
     }    
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 app.post("/register",(res,req)=>{
@@ -120,9 +145,9 @@ app.post("/register",(res,req)=>{
             }
         })
     }    
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 app.get("/login",auth,(req,res)=>{
@@ -163,9 +188,9 @@ app.get("/meta/:id",auth,(req,res)=>{
             })
         })
     }
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 
@@ -183,9 +208,9 @@ app.get("/prenotaposto/:id",auth,(req,res)=>{
             res.render("prenotaposto",{luogo:lio[0]})
         })
     }
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 app.post("/prenotaposto",auth,(req,res) => {
@@ -230,9 +255,9 @@ app.post("/prenotaposto",auth,(req,res) => {
             })
         })
     }
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 
@@ -253,9 +278,9 @@ app.get("/dash",auth,(req,res) => {
             })
         })
     }
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 
@@ -275,9 +300,9 @@ app.post("/delete_pren",auth,(req,res) => {
             })
         })
     }
-    catch
+    catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 app.post("/delete_acc",auth,(req,res) => {
@@ -293,9 +318,9 @@ app.post("/delete_acc",auth,(req,res) => {
             res.redirect("/logout")
         })
     }
-    catch
+   catch(error)
     {
-        res.render("error",{error : "Errore con il database"})
+        res.render("error",{error : error})
     }
 })
 

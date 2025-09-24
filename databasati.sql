@@ -1,8 +1,8 @@
 CREATE DATABASE garama_prenotazioni;
-USE UTENTI_PREN;
+USE garama_prenotazioni;
 CREATE TABLE utenti(
 id INT PRIMARY KEY AUTO_INCREMENT,
-username VARCHAR(50) PRIMARY KEY NOT NULL,
+username VARCHAR(50) NOT NULL,
 password VARCHAR(50) NOT NULL,
 nome VARCHAR(50),
 cognome VARCHAR(50)
