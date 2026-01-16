@@ -5,7 +5,7 @@
 
 ## Descizione
 
-- Simulazione di un sito we che permette di prenotare la visita in luoghi contenuti in un database, con possibilità di creare un account
+- Simulazione di un sito web che permette di prenotare la visita in luoghi contenuti in un database, con possibilità di creare un account
 
 ## Collaboratori
 
